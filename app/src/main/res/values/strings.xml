@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Second Lock</string>
+    <string name="google_ad_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="installed_apps">Installed Apps</string>
+    <string name="forget_your_password_1">Forget your password? </string>
+    <string name="forget_your_password_2"> Click here to</string>
+    <string name="set_your_password">Set your password</string>
+    <string name="input_password_again">Input password again</string>
+    <string name="wrong_password">Wrong password</string>
+    <string name="password_error4_times">Password error 4 times, confirm to reset password</string>
+    <string name="contact_us">Contact us</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="share">Share</string>
+    <string name="update">Update</string>
+    <string name="set_password">Set password</string>
+    <string name="apps_list_empty">Enter Installed Apps list,and click [icon] of apps to lock it now!</string>
+    <string name="are_you_sure_to_reset_them">After resetting the password, all locked apps will be unlocked. You need to manually restore them. Are you sure to reset them？</string>
+    <string name="confirm_you_encrypt">confirm that you want to encrypt the set</string>
+    <string name="set_password_successful">Set password successful</string>
+    <string name="please_enter_the_correct_password_to_access">Please enter the correct password to access</string>
+    <string name="locked_apps">Locked Apps</string>
+    <string name="app_lock">App Lock</string>
+    <string name="password_wrong">Password Wrong！</string>
+    <string name="wrong_fist">enter your password again</string>
+    <string name="setting">Setting</string>
+    <string name="got_it">got it</string>
+</resources>

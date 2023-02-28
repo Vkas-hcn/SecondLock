@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.vkas.secondlock.ui.main.MainActivity.SLClick" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F9FBFF"
+        android:onClick="@{() ->presenter.clickMain()}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="@{() ->presenter.clickMainMenu()}">
+
+            <include
+                android:id="@+id/in_nav_title"
+                layout="@layout/layout_toolbar_sl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="31dp"
+                android:layout_marginEnd="31dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/in_nav_title"
+                app:layout_constraintVertical_bias="0.1">
+
+                <TextView
+                    android:id="@+id/tv_contact_us_pt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_nav_item"
+                    android:drawablePadding="12dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() ->presenter.toContactUs()}"
+                    android:paddingStart="19dp"
+                    android:paddingTop="25dp"
+                    android:paddingEnd="22dp"
+                    android:paddingBottom="25dp"
+                    android:text="@string/contact_us"
+                    android:textColor="#FF0E0C11"
+                    android:textSize="14sp"
+                    app:drawableStartCompat="@drawable/ic_contact_us"
+                    app:drawableEndCompat="@drawable/ic_nav_arrow" />
+
+                <TextView
+                    android:id="@+id/tv_privacy_policy_pt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_nav_item"
+                    android:drawablePadding="12dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() ->presenter.toPrivacyPolicy()}"
+                    android:paddingStart="19dp"
+                    android:paddingTop="25dp"
+                    android:paddingEnd="22dp"
+                    android:paddingBottom="25dp"
+                    android:text="@string/privacy_policy"
+                    android:textColor="#FF0E0C11"
+                    android:textSize="14sp"
+                    app:drawableEndCompat="@drawable/ic_nav_arrow"
+                    app:drawableStartCompat="@drawable/ic_privacy_policy" />
+
+                <TextView
+                    android:id="@+id/tv_set_password_sl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_nav_item"
+                    android:drawablePadding="12dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() ->presenter.toSetPassword()}"
+                    android:paddingStart="19dp"
+                    android:paddingTop="25dp"
+                    android:paddingEnd="22dp"
+                    android:paddingBottom="25dp"
+                    android:text="@string/set_password"
+                    android:textColor="#FF0E0C11"
+                    android:textSize="14sp"
+                    app:drawableEndCompat="@drawable/ic_nav_arrow"
+                    app:drawableStartCompat="@drawable/ic_set_password" />
+
+                <TextView
+                    android:id="@+id/tv_update"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_nav_item"
+                    android:drawablePadding="12dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() ->presenter.toUpdate()}"
+                    android:paddingStart="19dp"
+                    android:paddingTop="25dp"
+                    android:paddingEnd="22dp"
+                    android:paddingBottom="25dp"
+                    android:text="@string/update"
+                    android:textColor="#FF0E0C11"
+                    android:textSize="14sp"
+                    app:drawableEndCompat="@drawable/ic_nav_arrow"
+                    app:drawableStartCompat="@drawable/ic_update" />
+
+                <TextView
+                    android:id="@+id/tv_share_pt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_nav_item"
+                    android:drawablePadding="12dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() ->presenter.toShare()}"
+                    android:paddingStart="19dp"
+                    android:paddingTop="25dp"
+                    android:paddingEnd="22dp"
+                    android:paddingBottom="25dp"
+                    android:text="@string/share"
+                    android:textColor="#FF0E0C11"
+                    android:textSize="14sp"
+                    app:drawableEndCompat="@drawable/ic_nav_arrow"
+                    app:drawableStartCompat="@drawable/ic_share" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>
+
