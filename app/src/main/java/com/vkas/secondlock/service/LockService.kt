@@ -47,7 +47,7 @@ class LockService : Service() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel =
-                NotificationChannel("5996773", "Space Locker", NotificationManager.IMPORTANCE_DEFAULT)
+                NotificationChannel("5996773", "Oasis Applock", NotificationManager.IMPORTANCE_DEFAULT)
             channel.enableLights(true) //是否在桌面icon右上角展示小红点
             channel.lightColor = Color.GREEN //小红点颜色
             channel.setShowBadge(false) //是否在久按桌面图标时显示此渠道的通知
@@ -56,7 +56,7 @@ class LockService : Service() {
         val builder: NotificationCompat.Builder = NotificationCompat.Builder(this)
         builder.setSmallIcon(R.mipmap.ic_launcher)
         builder.setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-        builder.setContentText("Space Locker is working")
+        builder.setContentText("Oasis Applock is working")
         builder.setWhen(System.currentTimeMillis())
         builder.setChannelId("5996773")
         val notification: Notification = builder.build()
