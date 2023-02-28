@@ -14,7 +14,9 @@ import com.jeremyliao.liveeventbus.LiveEventBus
 import com.vkas.secondlock.BR
 import com.vkas.secondlock.BuildConfig
 import com.vkas.secondlock.R
+import com.vkas.secondlock.ad.SlLoadOpenAd
 import com.vkas.secondlock.app.App
+import com.vkas.secondlock.base.AdBase
 import com.vkas.secondlock.base.BaseActivity
 import com.vkas.secondlock.base.BaseViewModel
 import com.vkas.secondlock.databinding.ActivityStartBinding
@@ -26,6 +28,7 @@ import com.vkas.secondlock.ui.main.MainActivity
 import com.vkas.secondlock.utils.KLog
 import com.vkas.secondlock.utils.MmkvUtils
 import com.vkas.secondlock.utils.SLUtils.getAppList
+import com.vkas.secondlock.utils.SLUtils.isThresholdReached
 import com.xuexiang.xui.widget.progress.HorizontalProgressView
 import kotlinx.coroutines.*
 
@@ -58,7 +61,7 @@ class StartActivity : BaseActivity<ActivityStartBinding, BaseViewModel>(),
     override fun initData() {
         super.initData()
         binding.pbStartSt.setProgressViewUpdateListener(this)
-        binding.pbStartSt.setProgressDuration(10000)
+        binding.pbStartSt.setProgressDuration(8000)
         binding.pbStartSt.startProgressAnimation()
         liveEventBusSt()
 //        lifecycleScope.launch(Dispatchers.IO) {
@@ -153,68 +156,63 @@ class StartActivity : BaseActivity<ActivityStartBinding, BaseViewModel>(),
     /**
      * 加载广告
      */
-//    private fun loadAdvertisement() {
-//        // 开屏
-//        AdBase.getOpenInstance().adIndexSt = 0
-//        AdBase.getOpenInstance().advertisementLoadingSt(this)
-//        rotationDisplayOpeningAdSt()
-//        // 首页原生
-//        AdBase.getHomeInstance().adIndexSt = 0
-//        AdBase.getHomeInstance().advertisementLoadingSt(this)
-//        // 翻译原生
-//        AdBase.getTranslationInstance().adIndexSt = 0
-//        AdBase.getTranslationInstance().advertisementLoadingSt(this)
-//        // 语言原生
-//        AdBase.getLanguageInstance().adIndexSt = 0
-//        AdBase.getLanguageInstance().advertisementLoadingSt(this)
-//        // 服务器页插屏
-//        AdBase.getBackInstance().adIndexSt = 0
-//        AdBase.getBackInstance().advertisementLoadingSt(this)
-//    }
+    private fun loadAdvertisement() {
+        // 开屏
+        AdBase.getOpenInstance().adIndexSl = 0
+        AdBase.getOpenInstance().advertisementLoadingSl(this)
+        rotationDisplayOpeningAdSl()
+        // 首页原生
+        AdBase.getAppInstance().adIndexSl = 0
+        AdBase.getAppInstance().advertisementLoadingSl(this)
+
+        // 加锁插屏
+        AdBase.getLockInstance().adIndexSl = 0
+        AdBase.getLockInstance().advertisementLoadingSl(this)
+    }
 
     /**
      * 轮训展示开屏广告
      */
-//    private fun rotationDisplayOpeningAdSt() {
-//        jobOpenAdsSt = lifecycleScope.launch {
-//            try {
-//                withTimeout(10000L) {
-//                    delay(3000L)
-//                    while (isActive) {
-//                        val showState = StLoadOpenAd
-//                            .judgeConditionsOpenAd(this@StartActivity)
-//                        if (showState) {
-//                            jobOpenAdsSt?.cancel()
-//                            jobOpenAdsSt = null
-//                            binding.pbStartSt.stopProgressAnimation()
-//                            binding.pbStartSt.progress = 100F
-//                        }
-//                        delay(1000L)
-//                    }
-//                }
-//            } catch (e: TimeoutCancellationException) {
-//                KLog.e("TimeoutCancellationException I'm sleeping $e")
-//                jumpPage()
-//            }
-//        }
-//    }
+    private fun rotationDisplayOpeningAdSl() {
+        jobOpenAdsSt = lifecycleScope.launch {
+            try {
+                withTimeout(8000L) {
+                    delay(3000L)
+                    while (isActive) {
+                        val showState = SlLoadOpenAd
+                            .judgeConditionsOpenAd(this@StartActivity)
+                        if (showState) {
+                            jobOpenAdsSt?.cancel()
+                            jobOpenAdsSt = null
+                            binding.pbStartSt.stopProgressAnimation()
+                            binding.pbStartSt.progress = 100F
+                        }
+                        delay(1000L)
+                    }
+                }
+            } catch (e: TimeoutCancellationException) {
+                KLog.e("TimeoutCancellationException I'm sleeping $e")
+                jumpPage()
+            }
+        }
+    }
 
     /**
      * 预加载广告
      */
     private fun preloadedAdvertisement() {
-//        App.isAppOpenSameDaySl()
-//        if (isThresholdReached()) {
-//            KLog.d(logTagSl, "广告达到上线")
+        App.isAppOpenSameDaySl()
+        if (isThresholdReached()) {
+            KLog.d(logTagSl, "广告达到上线")
             lifecycleScope.launch {
                 delay(3000L)
                 binding.pbStartSt.stopProgressAnimation()
                 binding.pbStartSt.progress = 100F
                 liveJumpHomePage.postValue(true)
             }
-//        } else {
-//            loadAdvertisement()
-//        }
+        } else {
+            loadAdvertisement()
+        }
     }
 
     override fun onHorizontalProgressStart(view: View?) {
@@ -225,11 +223,11 @@ class StartActivity : BaseActivity<ActivityStartBinding, BaseViewModel>(),
     }
 
     override fun onHorizontalProgressFinished(view: View?) {
-//        App.isAppOpenSameDaySt()
-//        if (!isThresholdReached()) {
-//            StLoadOpenAd
-//                .displayOpenAdvertisementSt(this@StartActivity)
-//        }
+        App.isAppOpenSameDaySl()
+        if (!isThresholdReached()) {
+            SlLoadOpenAd
+                .displayOpenAdvertisementSl(this@StartActivity)
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

@@ -129,14 +129,37 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_margin="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
+                <FrameLayout
+                    android:id="@+id/sl_ad_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_app_list"
+                    android:visibility="@{appListAdSl ? View.VISIBLE : View.GONE}" />
+
+                <ImageView
+                    android:id="@+id/img_sl_ad_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_applist_pl"
+                    android:visibility="@{appListAdSl ? View.GONE : View.VISIBLE}" />
+            </FrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <include
-            android:id="@+id/in_home_navigation"
-            layout="@layout/layout_main_navigation"
-            android:visibility="@{sidebarShowsSL ? View.VISIBLE : View.GONE}"
-            binding:presenter="@{presenter}" />
+<!--        <include-->
+<!--            android:id="@+id/in_home_navigation"-->
+<!--            layout="@layout/layout_main_navigation"-->
+<!--            android:visibility="@{sidebarShowsSL ? View.VISIBLE : View.GONE}"-->
+<!--            binding:presenter="@{presenter}" />-->
 
     </FrameLayout>
 

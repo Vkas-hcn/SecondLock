@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Second Lock</string>
+    <string name="app_name">Oasis Applock</string>
     <string name="google_ad_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="installed_apps">Installed Apps</string>
     <string name="forget_your_password_1">Forget your password? </string>

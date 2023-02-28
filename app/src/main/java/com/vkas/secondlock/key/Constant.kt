@@ -73,5 +73,10 @@ object Constant {
     const val LOCK_IS_INIT_DB = "lock_is_init_db" //是否初始化了数据库表
 
     const val LOCK_IS_INIT_FAVITER = "lock_is_init_faviter" //是否初始化了faviter数据表
-
+    // 广告本地文件名
+    const val AD_LOCAL_FILE_NAME_SL = "slAdData.json"
+    // vpn本地文件名
+    const val VPN_LOCAL_FILE_NAME_SL = "slVpnData.json"
+    // Fast本地文件名
+    const val FAST_LOCAL_FILE_NAME_SL = "slVpnFastData.json"
 }

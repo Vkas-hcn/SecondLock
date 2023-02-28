@@ -5,10 +5,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import com.google.gson.reflect.TypeToken
 import com.vkas.secondlock.app.App.Companion.mmkvSl
+import com.vkas.secondlock.bean.SlAdBean
 import com.vkas.secondlock.bean.SlAppBean
+import com.vkas.secondlock.bean.SlDetailBean
 import com.vkas.secondlock.key.Constant
 import com.xuexiang.xui.utils.Utils
 import com.xuexiang.xutil.net.JsonUtil
+import com.xuexiang.xutil.resource.ResourceUtils
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -90,5 +93,84 @@ object SLUtils {
             it.isLocked = false
         }
     }
+    /**
+     * 广告排序
+     */
+    private fun adSortingSl(elAdBean: SlAdBean): SlAdBean {
+        val adBean = SlAdBean()
+        adBean.sl_open = sortByWeightDescending(elAdBean.sl_open) { it.sl_weight }.toMutableList()
+        adBean.sl_app = sortByWeightDescending(elAdBean.sl_app) { it.sl_weight }.toMutableList()
+        adBean.sl_lock = sortByWeightDescending(elAdBean.sl_lock) { it.sl_weight }.toMutableList()
+        adBean.sl_show_num = elAdBean.sl_show_num
+        adBean.sl_click_num = elAdBean.sl_click_num
+        return adBean
+    }
+    /**
+     * 根据权重降序排序并返回新的列表
+     */
+    private fun <T> sortByWeightDescending(list: List<T>, getWeight: (T) -> Int): List<T> {
+        return list.sortedByDescending(getWeight)
+    }
 
+    /**
+     * 取出排序后的广告ID
+     */
+    fun takeSortedAdIDSl(index: Int, elAdDetails: MutableList<SlDetailBean>): String {
+        return elAdDetails.getOrNull(index)?.sl_id ?: ""
+    }
+
+    /**
+     * 获取广告服务器数据
+     */
+    fun getAdServerDataSl(): SlAdBean {
+        val serviceData: SlAdBean =
+            if (Utils.isNullOrEmpty(mmkvSl.decodeString(Constant.ADVERTISING_SL_DATA))) {
+                JsonUtil.fromJson(
+                    ResourceUtils.readStringFromAssert(Constant.AD_LOCAL_FILE_NAME_SL),
+                    object : TypeToken<
+                            SlAdBean?>() {}.type
+                )
+            } else {
+                JsonUtil.fromJson(
+                    mmkvSl.decodeString(Constant.ADVERTISING_SL_DATA),
+                    object : TypeToken<SlAdBean?>() {}.type
+                )
+            }
+        return adSortingSl(serviceData)
+    }
+
+    /**
+     * 是否达到阀值
+     */
+    fun isThresholdReached(): Boolean {
+        val clicksCount = mmkvSl.decodeInt(Constant.CLICKS_SL_COUNT, 0)
+        val showCount = mmkvSl.decodeInt(Constant.SHOW_SL_COUNT, 0)
+        KLog.e("TAG", "clicksCount=${clicksCount}, showCount=${showCount}")
+        KLog.e(
+            "TAG",
+            "sl_click_num=${getAdServerDataSl().sl_click_num}, getAdServerData().sl_show_num=${getAdServerDataSl().sl_show_num}"
+        )
+        if (clicksCount >= getAdServerDataSl().sl_click_num || showCount >= getAdServerDataSl().sl_show_num) {
+            return true
+        }
+        return false
+    }
+
+    /**
+     * 记录广告展示次数
+     */
+    fun recordNumberOfAdDisplaysSl() {
+        var showCount = mmkvSl.decodeInt(Constant.SHOW_SL_COUNT, 0)
+        showCount++
+        MmkvUtils.set(Constant.SHOW_SL_COUNT, showCount)
+    }
+
+    /**
+     * 记录广告点击次数
+     */
+    fun recordNumberOfAdClickSl() {
+        var clicksCount = mmkvSl.decodeInt(Constant.CLICKS_SL_COUNT, 0)
+        clicksCount++
+        MmkvUtils.set(Constant.CLICKS_SL_COUNT, clicksCount)
+    }
 }

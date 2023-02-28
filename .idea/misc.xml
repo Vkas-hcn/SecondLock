@@ -8,7 +8,9 @@
         <entry key="app/src/main/res/drawable/bg_dialog.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/drawable/bg_dialog_cancel.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/drawable/bg_dialog_confirm.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/drawable/bg_home_ad_button.xml" value="0.146875" />
         <entry key="app/src/main/res/drawable/bg_lock_dialog.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/drawable/bg_nav.xml" value="0.146875" />
         <entry key="app/src/main/res/drawable/bg_nav_item.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/drawable/bg_password_dis.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/drawable/bg_password_focus.xml" value="0.14791666666666667" />
@@ -25,6 +27,7 @@
         <entry key="app/src/main/res/layout/dialog_tips.xml" value="0.165" />
         <entry key="app/src/main/res/layout/item_app.xml" value="0.2234375" />
         <entry key="app/src/main/res/layout/layout_lock_screen.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_main_native_sl.xml" value="0.165" />
         <entry key="app/src/main/res/layout/layout_main_navigation.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_toolbar_sl.xml" value="0.2234375" />
       </map>

@@ -18,7 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.vkas.secondlock.BR
 import com.vkas.secondlock.R
+import com.vkas.secondlock.ad.SlLoadAppAd
+import com.vkas.secondlock.ad.SlLoadLockAd
 import com.vkas.secondlock.app.App
+import com.vkas.secondlock.base.AdBase
 import com.vkas.secondlock.base.BaseActivity
 import com.vkas.secondlock.bean.SlAppBean
 import com.vkas.secondlock.databinding.ActivityMainBinding
@@ -31,12 +34,10 @@ import com.vkas.secondlock.ui.wight.PasswordDialog
 import com.vkas.secondlock.ui.wight.SlLockeringDialog
 import com.vkas.secondlock.utils.KLog
 import com.vkas.secondlock.utils.SLUtils
+import com.vkas.secondlock.utils.SLUtils.isThresholdReached
 import com.xuexiang.xutil.net.JsonUtil
 import com.xuexiang.xutil.tip.ToastUtils
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private lateinit var appListBean: MutableList<SlAppBean>
@@ -94,8 +95,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         initRecyclerView()
         createBroadcast()
         viewModel.setIcon(binding.tvEmpty, this)
-//        SlLoadAppListAd.getInstance().whetherToShowSl = false
-//        initHomeAd()
+        AdBase.getAppInstance().whetherToShowSl = false
+        initHomeAd()
     }
 
     override fun initViewObservable() {
@@ -113,24 +114,24 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 sortApplicationToEmptyList()
             }
         //插屏关闭后跳转
-//        LiveEventBus
-//            .get(Constant.PLUG_SL_ADVERTISEMENT_SHOW, Boolean::class.java)
-//            .observeForever {
-//                KLog.e("state", "插屏关闭接收=${it}")
-//                SlLoadLockAd.getInstance().advertisementLoadingSl(this@MainActivity)
-//                if(!it){
-//                    //重复点击
-//                    jobRepeatClick = lifecycleScope.launch {
-//                        if (!repeatClick) {
-//                            App.timesLockingAndUnlocking = 0
-//                            lockClickJudgment()
-//                            repeatClick = true
-//                        }
-//                        delay(1000)
-//                        repeatClick = false
-//                    }
-//                }
-//            }
+        LiveEventBus
+            .get(Constant.PLUG_SL_ADVERTISEMENT_SHOW, Boolean::class.java)
+            .observeForever {
+                KLog.e("state", "插屏关闭接收=${it}")
+                AdBase.getLockInstance().advertisementLoadingSl(this@MainActivity)
+                if(!it){
+                    //重复点击
+                    jobRepeatClick = lifecycleScope.launch {
+                        if (!repeatClick) {
+                            App.timesLockingAndUnlocking = 0
+                            lockClickJudgment()
+                            repeatClick = true
+                        }
+                        delay(1000)
+                        repeatClick = false
+                    }
+                }
+            }
         //密码框关闭后刷新广告
         LiveEventBus
             .get(Constant.WHETHER_REFRESH_NATIVE_AD, Boolean::class.java)
@@ -207,40 +208,40 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
      */
     private fun launchLockingAdvertisement() {
         launchLockingJob = lifecycleScope.launch {
-//            App.isAppOpenSameDaySl()
-//            if (isThresholdReached()) {
-//                KLog.d(logTagSl, "广告达到上线")
+            App.isAppOpenSameDaySl()
+            if (isThresholdReached()) {
+                KLog.d(logTagSl, "广告达到上线")
             App.timesLockingAndUnlocking = 0
             isHaveAd = false
             lockClickJudgment()
-//                return@launch
-//            }
-//            SlLoadLockAd.getInstance().advertisementLoadingSl(this@MainActivity)
-//            val mDialog = SlLockeringDialog(this@MainActivity, 8000)
-//            mDialog.show()
-//            try {
-//                withTimeout(8000L) {
-//                    delay(2000)
-//                    KLog.e(logTagSl, "jobStartSl?.isActive=${launchLockingJob?.isActive}")
-//                    while (launchLockingJob?.isActive == true) {
-//                        val showState =
-//                            SlLoadLockAd.getInstance()
-//                                .displayConnectAdvertisementSl(this@MainActivity)
-//                        if (showState) {
-//                            launchLockingJob?.cancel()
-//                            launchLockingJob = null
-//                            mDialog.dismiss()
-//                        }
-//                        delay(1000L)
-//                    }
-//                }
-//            } catch (e: TimeoutCancellationException) {
-//                KLog.d(logTagSl, "connect---插屏超时")
-//                if (launchLockingJob != null) {
-//                    mDialog.dismiss()
-//                    lockClickJudgment()
-//                }
-//            }
+                return@launch
+            }
+            AdBase.getLockInstance().advertisementLoadingSl(this@MainActivity)
+            val mDialog = SlLockeringDialog(this@MainActivity, 8000)
+            mDialog.show()
+            try {
+                withTimeout(8000L) {
+                    delay(2000)
+                    KLog.e(logTagSl, "jobStartSl?.isActive=${launchLockingJob?.isActive}")
+                    while (launchLockingJob?.isActive == true) {
+                        val showState =
+                            SlLoadLockAd
+                                .displayLockAdvertisementSl(this@MainActivity)
+                        if (showState) {
+                            launchLockingJob?.cancel()
+                            launchLockingJob = null
+                            mDialog.dismiss()
+                        }
+                        delay(1000L)
+                    }
+                }
+            } catch (e: TimeoutCancellationException) {
+                KLog.d(logTagSl, "connect---插屏超时")
+                if (launchLockingJob != null) {
+                    mDialog.dismiss()
+                    lockClickJudgment()
+                }
+            }
         }
     }
 
@@ -348,20 +349,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     fun setTitleNav() {
-        if (binding.sidebarShowsSL == true) {
-            binding.inHomeNavigation.inNavTitle.let {
-                it.imgRight.visibility = View.VISIBLE
-                it.tvMiddle.text = getString(R.string.app_lock)
-            }
-        } else {
-            binding.inHomeNavigation.inNavTitle.let {
-                it.imgRight.visibility = View.GONE
-                it.tvMiddle.text = getString(R.string.setting)
-                it.imgLeft.setOnClickListener {
-                    binding.sidebarShowsSL = false
-                }
-            }
-        }
+//        if (binding.sidebarShowsSL == true) {
+//            binding.inHomeNavigation.inNavTitle.let {
+//                it.imgRight.visibility = View.VISIBLE
+//                it.tvMiddle.text = getString(R.string.app_lock)
+//            }
+//        } else {
+//            binding.inHomeNavigation.inNavTitle.let {
+//                it.imgRight.visibility = View.GONE
+//                it.tvMiddle.text = getString(R.string.setting)
+//                it.imgLeft.setOnClickListener {
+//                    binding.sidebarShowsSL = false
+//                }
+//            }
+//        }
 
     }
 
@@ -428,16 +429,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun initHomeAd() {
-//        jobNativeAdsSl = lifecycleScope.launch {
-//            while (isActive) {
-//                SlLoadAppListAd.getInstance().setDisplayHomeNativeAdSl(this@MainActivity, binding)
-//                if (SlLoadAppListAd.getInstance().whetherToShowSl) {
-//                    jobNativeAdsSl?.cancel()
-//                    jobNativeAdsSl = null
-//                }
-//                delay(1000L)
-//            }
-//        }
+        jobNativeAdsSl = lifecycleScope.launch {
+            while (isActive) {
+                SlLoadAppAd.setDisplayAppNativeAdSl(this@MainActivity, binding)
+                if (AdBase.getAppInstance().whetherToShowSl) {
+                    jobNativeAdsSl?.cancel()
+                    jobNativeAdsSl = null
+                }
+                delay(1000L)
+            }
+        }
     }
 
     /**
@@ -473,19 +474,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             if (lifecycle.currentState != Lifecycle.State.RESUMED) {
                 return@launch
             }
-//            if (App.nativeAdRefreshSl && !App.whetherJumpPermission) {
-//                SlLoadAppListAd.getInstance().whetherToShowSl = false
-//                if (SlLoadAppListAd.getInstance().appAdDataSl != null) {
-//                    KLog.d(logTagSl, "onResume------>11")
-//                    SlLoadAppListAd.getInstance()
-//                        .setDisplayHomeNativeAdSl(this@MainActivity, binding)
-//                } else {
-//                    binding.appListAdSl = false
-//                    KLog.d(logTagSl, "onResume------>22")
-//                    SlLoadAppListAd.getInstance().advertisementLoadingSl(this@MainActivity)
-//                    initHomeAd()
-//                }
-//            }
+            if (App.nativeAdRefreshSl && !App.whetherJumpPermission) {
+                AdBase.getAppInstance().whetherToShowSl = false
+                if (AdBase.getAppInstance().appAdDataSl != null) {
+                    KLog.d(logTagSl, "onResume------>11")
+                    SlLoadAppAd.setDisplayAppNativeAdSl(this@MainActivity, binding)
+                } else {
+                    binding.appListAdSl = false
+                    KLog.d(logTagSl, "onResume------>22")
+                    AdBase.getAppInstance().advertisementLoadingSl(this@MainActivity)
+                    initHomeAd()
+                }
+            }
             App.whetherJumpPermission = false
         }
     }
