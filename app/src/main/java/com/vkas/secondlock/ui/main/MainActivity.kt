@@ -349,20 +349,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     fun setTitleNav() {
-//        if (binding.sidebarShowsSL == true) {
-//            binding.inHomeNavigation.inNavTitle.let {
-//                it.imgRight.visibility = View.VISIBLE
-//                it.tvMiddle.text = getString(R.string.app_lock)
-//            }
-//        } else {
-//            binding.inHomeNavigation.inNavTitle.let {
-//                it.imgRight.visibility = View.GONE
-//                it.tvMiddle.text = getString(R.string.setting)
-//                it.imgLeft.setOnClickListener {
-//                    binding.sidebarShowsSL = false
-//                }
-//            }
-//        }
+        if (binding.sidebarShowsSL == true) {
+            binding.inHomeNavigation.inNavTitle.let {
+                it.imgRight.visibility = View.VISIBLE
+                it.tvMiddle.text = getString(R.string.app_lock)
+            }
+        } else {
+            binding.inHomeNavigation.inNavTitle.let {
+                it.imgRight.visibility = View.GONE
+                it.tvMiddle.text = getString(R.string.setting)
+                it.imgLeft.setOnClickListener {
+                    binding.sidebarShowsSL = false
+                }
+            }
+        }
 
     }
 

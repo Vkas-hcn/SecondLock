@@ -93,7 +93,7 @@ object SlLoadAppAd {
     fun setDisplayAppNativeAdSl(activity: AppCompatActivity, binding: ActivityMainBinding) {
         activity.runOnUiThread {
             adBase.appAdDataSl?.let { adData ->
-                if (adData is NativeAd && !adBase.whetherToShowSl && activity.lifecycle.currentState == Lifecycle.State.RESUMED) {
+                if (adData is NativeAd && !adBase.whetherToShowSl && activity.lifecycle.currentState == Lifecycle.State.RESUMED && !App.isFrameDisplayed) {
                     if (activity.isDestroyed || activity.isFinishing || activity.isChangingConfigurations) {
                         adData.destroy()
                         return@let

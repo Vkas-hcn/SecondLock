@@ -190,6 +190,7 @@ class PasswordDialog : Dialog, View.OnClickListener, VerifyCodeEditText.OnInputL
      * 设置密码
      */
     private fun setPassword(input: String?) {
+        topText.visibility = View.VISIBLE
         if (Utils.isNullOrEmpty(fistPassword)) {
             fistPassword = input.toString()
             topText.text = context.getString(R.string.input_password_again)
@@ -199,6 +200,7 @@ class PasswordDialog : Dialog, View.OnClickListener, VerifyCodeEditText.OnInputL
             secondPassword = input.toString()
             if (secondPassword != fistPassword) {
                 topText.text = context.getString(R.string.wrong_password)
+                fistPassword = ""
                 verifyCodeEditText.setPasswordErrorColor()
                 return
             } else {

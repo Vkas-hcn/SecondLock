@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.net.http.SslError
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.SslErrorHandler
 import android.webkit.WebView
@@ -31,6 +32,7 @@ class WebSlActivity : BaseActivity<ActivityWebBinding, BaseViewModel>() {
         binding.webTitleSt.imgLeft.setOnClickListener {
             finish()
         }
+        binding.webTitleSt.imgRight.visibility = View.GONE
         binding.webTitleSt.tvMiddle.text = getString(R.string.privacy_policy)
     }
 
