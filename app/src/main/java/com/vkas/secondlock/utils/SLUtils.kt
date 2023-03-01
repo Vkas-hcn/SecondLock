@@ -98,9 +98,9 @@ object SLUtils {
      */
     private fun adSortingSl(elAdBean: SlAdBean): SlAdBean {
         val adBean = SlAdBean()
-        adBean.sl_open = sortByWeightDescending(elAdBean.sl_open) { it.sl_weight }.toMutableList()
-        adBean.sl_app = sortByWeightDescending(elAdBean.sl_app) { it.sl_weight }.toMutableList()
-        adBean.sl_lock = sortByWeightDescending(elAdBean.sl_lock) { it.sl_weight }.toMutableList()
+        adBean.sl_open = sortByWeightDescending(elAdBean.sl_open) { it.OasisAp_d }.toMutableList()
+        adBean.sl_app = sortByWeightDescending(elAdBean.sl_app) { it.OasisAp_d }.toMutableList()
+        adBean.sl_lock = sortByWeightDescending(elAdBean.sl_lock) { it.OasisAp_d }.toMutableList()
         adBean.sl_show_num = elAdBean.sl_show_num
         adBean.sl_click_num = elAdBean.sl_click_num
         return adBean
@@ -116,7 +116,7 @@ object SLUtils {
      * 取出排序后的广告ID
      */
     fun takeSortedAdIDSl(index: Int, elAdDetails: MutableList<SlDetailBean>): String {
-        return elAdDetails.getOrNull(index)?.sl_id ?: ""
+        return elAdDetails.getOrNull(index)?.OasisAp_c ?: ""
     }
 
     /**

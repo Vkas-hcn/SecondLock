@@ -33,7 +33,7 @@ object SlLoadLockAd {
     fun loadLockAdvertisementSl(context: Context, adData: SlAdBean) {
         val adRequest = AdRequest.Builder().build()
         val id = takeSortedAdIDSl(adBase.adIndexSl, adData.sl_lock)
-        KLog.d(logTagSl, "lock--插屏广告id=$id;权重=${adData.sl_lock.getOrNull(adBase.adIndexSl)?.sl_weight}")
+        KLog.d(logTagSl, "lock--插屏广告id=$id;权重=${adData.sl_lock.getOrNull(adBase.adIndexSl)?.OasisAp_d}")
 
         InterstitialAd.load(
             context,

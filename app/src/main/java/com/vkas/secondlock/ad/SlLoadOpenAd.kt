@@ -29,7 +29,7 @@ object SlLoadOpenAd {
      * 加载启动页广告
      */
     private fun loadSlartupPageAdvertisementSl(context: Context, adData: SlAdBean) {
-        if (adData.sl_open.getOrNull(adBase.adIndexSl)?.sl_type == "screen") {
+        if (adData.sl_open.getOrNull(adBase.adIndexSl)?.OasisAp_a == "screen") {
             loadSlartInsertAdSl(context, adData)
         } else {
             loadOpenAdvertisementSl(context, adData)
@@ -48,7 +48,7 @@ object SlLoadOpenAd {
 
         val id = takeSortedAdIDSl(adBase.adIndexSl, adData.sl_open)
 
-        KLog.d(logTagSl, "open--开屏广告id=$id;权重=${adData.sl_open.getOrNull(adBase.adIndexSl)?.sl_weight}")
+        KLog.d(logTagSl, "open--开屏广告id=$id;权重=${adData.sl_open.getOrNull(adBase.adIndexSl)?.OasisAp_c}")
         val request = AdRequest.Builder().build()
         AppOpenAd.load(
             context,
@@ -171,7 +171,7 @@ object SlLoadOpenAd {
         val id = takeSortedAdIDSl(adBase.adIndexSl, adData.sl_open)
         KLog.d(
             logTagSl,
-            "open--插屏广告id=$id;权重=${adData.sl_open.getOrNull(adBase.adIndexSl)?.sl_weight}"
+            "open--插屏广告id=$id;权重=${adData.sl_open.getOrNull(adBase.adIndexSl)?.OasisAp_c}"
         )
 
         InterstitialAd.load(

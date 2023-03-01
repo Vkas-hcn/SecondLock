@@ -12,8 +12,8 @@ data class SlAdBean (
 )
 @Keep
 data class SlDetailBean(
-    val sl_id: String,
-    val sl_platform: String,
-    val sl_type: String,
-    val sl_weight: Int
+    val OasisAp_a: String,
+    val OasisAp_b: String,
+    val OasisAp_c: String,
+    val OasisAp_d: Int
 )

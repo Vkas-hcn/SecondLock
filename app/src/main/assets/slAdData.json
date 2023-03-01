@@ -3,62 +3,26 @@
   "sl_click_num": 3,
   "sl_open": [
     {
-      "sl_type": "open",
-      "sl_platform": "admob",
-      "sl_id": "ca-app-pub-3940256099942544/3419835294x",
-      "sl_weight": 2
-    },
-    {
-      "sl_type": "screen",
-      "sl_platform": "admob",
-      "sl_id": "ca-app-pub-3940256099942544/1033173712xx",
-      "sl_weight": 3
-    },
-    {
-      "sl_type": "open",
-      "sl_platform": "admob",
-      "sl_id": "ca-app-pub-3940256099942544/3419835294",
-      "sl_weight": 1
+      "OasisAp_a": "open",
+      "OasisAp_b": "admob",
+      "OasisAp_c": "ca-app-pub-3940256099942544/3419835294",
+      "OasisAp_d": 2
     }
   ],
   "sl_lock": [
     {
-      "sl_type": "screen",
-      "sl_platform": "admob",
-      "sl_id": "ca-app-pub-3940256099942544/8691691433x",
-      "sl_weight": 2
-    },
-    {
-      "sl_type": "screen",
-      "sl_platform": "admob",
-      "sl_id": "ca-app-pub-3940256099942544/8691691433",
-      "sl_weight": 1
-    },
-    {
-      "sl_type": "screen",
-      "sl_platform": "admob",
-      "sl_id": "ca-app-pub-3940256099942544/8691691433xx",
-      "sl_weight": 3
+      "OasisAp_a": "screen",
+      "OasisAp_b": "admob",
+      "OasisAp_c": "ca-app-pub-3940256099942544/8691691433",
+      "OasisAp_d": 1
     }
   ],
   "sl_app": [
     {
-      "sl_type": "primitive",
-      "sl_platform": "admob",
-      "sl_id": "ca-app-pub-3940256099942544/2247696110x",
-      "sl_weight": 2
-    },
-    {
-      "sl_type": "primitive",
-      "sl_platform": "admob",
-      "sl_id": "ca-app-pub-3940256099942544/2247696110",
-      "sl_weight": 1
-    },
-    {
-      "sl_type": "primitive",
-      "sl_platform": "admob",
-      "sl_id": "ca-app-pub-3940256099942544/2247696110xx",
-      "sl_weight": 3
+      "OasisAp_a": "primitive",
+      "OasisAp_b": "admob",
+      "OasisAp_c": "ca-app-pub-3940256099942544/2247696110",
+      "OasisAp_d": 1
     }
   ]
 }

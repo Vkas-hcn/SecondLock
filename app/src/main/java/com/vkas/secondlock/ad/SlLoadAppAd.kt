@@ -32,7 +32,7 @@ object SlLoadAppAd {
      */
     fun loadAppAdvertisementSl(context: Context, adData: SlAdBean) {
         val id = takeSortedAdIDSl(adBase.adIndexSl, adData.sl_app)
-        KLog.d(logTagSl, "home---原生广告id=$id;权重=${adData.sl_app.getOrNull(adBase.adIndexSl)?.sl_weight}")
+        KLog.d(logTagSl, "home---原生广告id=$id;权重=${adData.sl_app.getOrNull(adBase.adIndexSl)?.OasisAp_d}")
 
         val vpnNativeAds = AdLoader.Builder(
             context.applicationContext,

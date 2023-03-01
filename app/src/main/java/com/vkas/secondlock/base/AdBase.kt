@@ -87,7 +87,7 @@ class AdBase {
 
     private val adLoaders = mapOf<Int, (Context, SlAdBean) -> Unit>(
         1 to { context, adData ->
-            val adType = adData.sl_open.getOrNull(adIndexSl)?.sl_type
+            val adType = adData.sl_open.getOrNull(adIndexSl)?.OasisAp_a
             if (adType == "screen") {
                 SlLoadOpenAd.loadSlartInsertAdSl(context, adData)
             } else {

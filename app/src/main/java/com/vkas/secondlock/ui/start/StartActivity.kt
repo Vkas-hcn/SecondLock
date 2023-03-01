@@ -116,7 +116,7 @@ class StartActivity : BaseActivity<ActivityStartBinding, BaseViewModel>(),
                 MmkvUtils.set(Constant.PROFILE_SL_DATA, auth.getString("st_ser"))
                 MmkvUtils.set(Constant.PROFILE_SL_DATA_FAST, auth.getString("st_smar"))
                 MmkvUtils.set(Constant.AROUND_SL_FLOW_DATA, auth.getString("stAroundFlow_Data"))
-                MmkvUtils.set(Constant.ADVERTISING_SL_DATA, auth.getString("SLAD_Data"))
+                MmkvUtils.set(Constant.ADVERTISING_SL_DATA, auth.getString("OasisAp_adfire"))
 
             }
         }
